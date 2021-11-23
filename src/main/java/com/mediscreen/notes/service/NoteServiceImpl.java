@@ -1,5 +1,6 @@
 package com.mediscreen.notes.service;
 
+import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.model.NoteDto;
 import com.mediscreen.notes.model.NoteMapper;
 import com.mediscreen.notes.repository.NoteRepository;
@@ -22,5 +23,11 @@ public class NoteServiceImpl implements NoteService{
     @Override
     public List<NoteDto> getNotesByPatientId(int patientId) {
         return NoteMapper.INSTANCE.mapToDtoList(noteRepository.findAllByPatientId(patientId));
+    }
+
+    @Override
+    public NoteDto saveNote(NoteDto noteToSave) {
+        Note note = NoteMapper.INSTANCE.mapToEntity(noteToSave);
+        return NoteMapper.INSTANCE.mapToDTO(noteRepository.save(note));
     }
 }

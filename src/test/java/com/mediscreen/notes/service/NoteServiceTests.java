@@ -2,6 +2,7 @@ package com.mediscreen.notes.service;
 
 import com.mediscreen.notes.model.Note;
 import com.mediscreen.notes.model.NoteDto;
+import com.mediscreen.notes.model.NoteMapper;
 import com.mediscreen.notes.repository.NoteRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
@@ -49,5 +50,18 @@ public class NoteServiceTests {
 
         Assert.assertEquals(1, result.size());
         Assert.assertEquals("noteId", result.get(0).getId());
+    }
+
+    @Test
+    public void saveNoteTest(){
+        Note noteToSave = new Note();
+        noteToSave.setPatientId(1);
+        noteToSave.setNote("medical comments");
+
+        Mockito.when(noteRepositoryMock.save(noteToSave)).thenReturn(note);
+
+        NoteDto result = noteService.saveNote(NoteMapper.INSTANCE.mapToDTO(noteToSave));
+
+        Assert.assertEquals(note.getId(), result.getId());
     }
 }

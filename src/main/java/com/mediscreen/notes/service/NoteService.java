@@ -9,4 +9,5 @@ import java.util.List;
 public interface NoteService {
     List<NoteDto> getAll();
     List<NoteDto> getNotesByPatientId(int patientId);
+    NoteDto saveNote(NoteDto noteToSave);
 }

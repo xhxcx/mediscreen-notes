@@ -11,11 +11,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -59,6 +62,28 @@ public class NoteControllerTests {
                 .andExpect(mvcResult -> {
                     Assert.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
                     Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(expectedContent));
+                });
+    }
+
+    @Test
+    public void saveNoteShouldReturn201AndNewNoteDTO() throws Exception {
+        Mockito.when(noteServiceMock.saveNote(any(NoteDto.class))).thenReturn(note);
+
+        String newNoteBody = "{\"patientId\":1,\"note\":\"medical comments\"}";
+        String expectedResult = "{\"id\":\"noteId\",\"patientId\":1,\"note\":\"medical comments\"}";
+
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(newNoteBody))
+                .andExpect(mvcResult -> {
+                    Assert.assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
+                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(expectedResult));
+                });
+    }
+
+    @Test
+    public void saveNoteShouldReturn400WhenNoteDtoNotValid() throws Exception {
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content("{\"validJson\":\"but not a valid note\"}"))
+                .andExpect(mvcResult -> {
+                    Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.getResponse().getStatus());
                 });
     }
 }
