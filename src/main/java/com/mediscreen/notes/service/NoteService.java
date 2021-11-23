@@ -1,6 +1,6 @@
-package com.mediscreen.service;
+package com.mediscreen.notes.service;
 
-import com.mediscreen.model.NoteDto;
+import com.mediscreen.notes.model.NoteDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

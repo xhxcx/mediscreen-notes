@@ -1,7 +1,7 @@
-package com.mediscreen.controller;
+package com.mediscreen.notes.controller;
 
-import com.mediscreen.model.NoteDto;
-import com.mediscreen.service.NoteService;
+import com.mediscreen.notes.model.NoteDto;
+import com.mediscreen.notes.service.NoteService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

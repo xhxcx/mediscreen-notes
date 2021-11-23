@@ -1,4 +1,4 @@
-package com.mediscreen.model;
+package com.mediscreen.notes.model;
 
 import lombok.Data;
 

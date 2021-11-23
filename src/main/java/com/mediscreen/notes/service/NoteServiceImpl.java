@@ -1,8 +1,8 @@
-package com.mediscreen.service;
+package com.mediscreen.notes.service;
 
-import com.mediscreen.model.NoteDto;
-import com.mediscreen.model.NoteMapper;
-import com.mediscreen.repository.NoteRepository;
+import com.mediscreen.notes.model.NoteDto;
+import com.mediscreen.notes.model.NoteMapper;
+import com.mediscreen.notes.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

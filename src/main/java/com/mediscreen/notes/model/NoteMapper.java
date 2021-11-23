@@ -1,4 +1,4 @@
-package com.mediscreen.model;
+package com.mediscreen.notes.model;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

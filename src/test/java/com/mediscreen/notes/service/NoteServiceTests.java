@@ -1,8 +1,8 @@
-package com.mediscreen.service;
+package com.mediscreen.notes.service;
 
-import com.mediscreen.model.Note;
-import com.mediscreen.model.NoteDto;
-import com.mediscreen.repository.NoteRepository;
+import com.mediscreen.notes.model.Note;
+import com.mediscreen.notes.model.NoteDto;
+import com.mediscreen.notes.repository.NoteRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

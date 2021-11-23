@@ -1,7 +1,8 @@
-package com.mediscreen.controller;
+package com.mediscreen.notes.controller;
 
-import com.mediscreen.model.NoteDto;
-import com.mediscreen.service.NoteService;
+import com.mediscreen.notes.model.NoteDto;
+import com.mediscreen.notes.service.NoteService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,14 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
+    @ApiOperation(value = "get all notes as a list")
     @GetMapping("/")
     public ResponseEntity<List<NoteDto>> getAll(){
         LOGGER.info("GET / ");
         return new ResponseEntity<>(noteService.getAll(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "get all notes for the given patient based on its id as path variable")
     @GetMapping("/patient/{id}")
     public ResponseEntity<List<NoteDto>> getNotesForPatientId(@PathVariable("id") int id){
         LOGGER.info("GET /patient/{id} patientId=" + id);

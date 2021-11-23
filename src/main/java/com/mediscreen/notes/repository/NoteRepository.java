@@ -1,6 +1,6 @@
-package com.mediscreen.repository;
+package com.mediscreen.notes.repository;
 
-import com.mediscreen.model.Note;
+import com.mediscreen.notes.model.Note;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
