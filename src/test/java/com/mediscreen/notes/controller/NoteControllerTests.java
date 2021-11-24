@@ -19,6 +19,7 @@ import java.util.Collections;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -31,6 +32,7 @@ public class NoteControllerTests {
     private MockMvc mockMvc;
 
     private static final NoteDto note = new NoteDto();
+    private static final String NOTE_AS_JSON = "{\"id\":\"noteId\",\"patientId\":1,\"note\":\"medical comments\"}";
 
     @BeforeAll
     static void setUp(){
@@ -43,12 +45,10 @@ public class NoteControllerTests {
     public void getAllShouldReturn200AndAListOfNoteDTO() throws Exception {
         Mockito.when(noteServiceMock.getAll()).thenReturn(Collections.singletonList(note));
 
-        String expectedContent = "{\"id\":\"noteId\",\"patientId\":1,\"note\":\"medical comments\"}";
-
         mockMvc.perform(get("/"))
                 .andExpect(mvcResult -> {
                     Assert.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(expectedContent));
+                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(NOTE_AS_JSON));
                 });
     }
 
@@ -56,12 +56,10 @@ public class NoteControllerTests {
     public void getNotesForPatientIdShouldReturn200AndAListOfNoteDTO() throws Exception {
         Mockito.when(noteServiceMock.getNotesByPatientId(1)).thenReturn(Collections.singletonList(note));
 
-        String expectedContent = "{\"id\":\"noteId\",\"patientId\":1,\"note\":\"medical comments\"}";
-
         mockMvc.perform(get("/patient/1"))
                 .andExpect(mvcResult -> {
                     Assert.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
-                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(expectedContent));
+                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(NOTE_AS_JSON));
                 });
     }
 
@@ -70,18 +68,55 @@ public class NoteControllerTests {
         Mockito.when(noteServiceMock.saveNote(any(NoteDto.class))).thenReturn(note);
 
         String newNoteBody = "{\"patientId\":1,\"note\":\"medical comments\"}";
-        String expectedResult = "{\"id\":\"noteId\",\"patientId\":1,\"note\":\"medical comments\"}";
 
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(newNoteBody))
                 .andExpect(mvcResult -> {
                     Assert.assertEquals(HttpStatus.CREATED.value(), mvcResult.getResponse().getStatus());
-                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(expectedResult));
+                    Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(NOTE_AS_JSON));
                 });
     }
 
     @Test
     public void saveNoteShouldReturn400WhenNoteDtoNotValid() throws Exception {
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content("{\"validJson\":\"but not a valid note\"}"))
+                .andExpect(mvcResult -> {
+                    Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.getResponse().getStatus());
+                });
+    }
+
+    @Test
+    public void findNoteShouldReturn200AndANoteDto() throws Exception {
+        Mockito.when(noteServiceMock.findNote("noteId")).thenReturn(note);
+
+        mockMvc.perform(get("/" + "noteId"))
+                .andExpect(mvcResult -> {
+                   Assert.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+                   Assert.assertTrue(mvcResult.getResponse().getContentAsString().contains(NOTE_AS_JSON));
+                });
+    }
+
+    @Test
+    public void findNoteShouldReturn404() throws Exception {
+        Mockito.when(noteServiceMock.findNote("notFoundId")).thenReturn(null);
+
+        mockMvc.perform(get("/" + "notFoundId"))
+                .andExpect(mvcResult -> Assert.assertEquals(HttpStatus.NOT_FOUND.value(), mvcResult.getResponse().getStatus()));
+    }
+
+    @Test
+    public void updateNoteShouldReturn200AndUpdatedNote() throws Exception {
+        Mockito.when(noteServiceMock.saveNote(any(NoteDto.class))).thenReturn(note);
+
+        mockMvc.perform(put("/"+"noteId").contentType(MediaType.APPLICATION_JSON).content(NOTE_AS_JSON))
+                .andExpect(mvcResult -> {
+                   Assert.assertEquals(HttpStatus.OK.value(), mvcResult.getResponse().getStatus());
+                   Assert.assertTrue(mvcResult.getResponse().getContentAsString().equalsIgnoreCase(NOTE_AS_JSON));
+                });
+    }
+
+    @Test
+    public void updateNoteShouldReturn400() throws Exception {
+        mockMvc.perform(put("/"+"noteId").contentType(MediaType.APPLICATION_JSON).content("{\"validJson\":\"but not a valid note\"}"))
                 .andExpect(mvcResult -> {
                     Assert.assertEquals(HttpStatus.BAD_REQUEST.value(), mvcResult.getResponse().getStatus());
                 });

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 public class NoteServiceTests {
@@ -63,5 +64,19 @@ public class NoteServiceTests {
         NoteDto result = noteService.saveNote(NoteMapper.INSTANCE.mapToDTO(noteToSave));
 
         Assert.assertEquals(note.getId(), result.getId());
+    }
+
+    @Test
+    public void findNoteOKTest(){
+        Mockito.when(noteRepositoryMock.findById("noteId")).thenReturn(java.util.Optional.of(note));
+
+        Assert.assertEquals(1, (int) noteService.findNote("noteId").getPatientId());
+    }
+
+    @Test
+    public void findNoteNotFoundTest(){
+        Mockito.when(noteRepositoryMock.findById("badId")).thenReturn(Optional.empty());
+
+        Assert.assertNull(noteService.findNote("badId"));
     }
 }

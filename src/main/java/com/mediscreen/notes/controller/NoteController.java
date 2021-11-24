@@ -35,10 +35,25 @@ public class NoteController {
         return new ResponseEntity<>(noteService.getNotesByPatientId(id), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Get a note by its id")
+    @GetMapping("/{id}")
+    public ResponseEntity<NoteDto> findNote(@PathVariable("id") String id){
+        LOGGER.info("GET /id noteId=" + id);
+        NoteDto existingNote = noteService.findNote(id);
+        return existingNote != null ? new ResponseEntity<>(existingNote, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @ApiOperation(value = "create a new note")
     @PostMapping("/")
     public ResponseEntity<NoteDto> saveNote(@Valid @RequestBody NoteDto note){
         LOGGER.info("POST / newNote= " + note);
         return new ResponseEntity<>(noteService.saveNote(note), HttpStatus.CREATED);
+    }
+
+    @ApiOperation(value = "Update an existing note")
+    @PutMapping("/{id}")
+    public ResponseEntity<NoteDto> updateNote(@Valid @RequestBody NoteDto noteToUpdate){
+        LOGGER.info("PUT / noteToUpdate id= " + noteToUpdate.getId());
+        return new ResponseEntity<>(noteService.saveNote(noteToUpdate), HttpStatus.OK);
     }
 }

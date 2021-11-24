@@ -26,6 +26,11 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
+    public NoteDto findNote(String noteId) {
+        return NoteMapper.INSTANCE.mapToDTO(noteRepository.findById(noteId).orElse(null));
+    }
+
+    @Override
     public NoteDto saveNote(NoteDto noteToSave) {
         Note note = NoteMapper.INSTANCE.mapToEntity(noteToSave);
         return NoteMapper.INSTANCE.mapToDTO(noteRepository.save(note));
