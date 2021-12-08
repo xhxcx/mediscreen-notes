@@ -47,7 +47,8 @@ public class NoteController {
     @PostMapping("/")
     public ResponseEntity<NoteDto> saveNote(@Valid @RequestBody NoteDto note){
         LOGGER.info("POST / newNote= " + note);
-        return new ResponseEntity<>(noteService.saveNote(note), HttpStatus.CREATED);
+        NoteDto savedNote = noteService.saveNote(note);
+        return savedNote != null ? new ResponseEntity<>(savedNote, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @ApiOperation(value = "Update an existing note")
