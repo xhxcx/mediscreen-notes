@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+notesApi,com.mediscreen.notes.controller,NoteController,4,109,1,3,0,14,1,8,0,7
+notesApi,com.mediscreen.notes.service,NoteServiceImpl,0,38,0,0,0,6,0,5,0,5
+notesApi,com.mediscreen.notes,NotesApiApplication,5,3,0,0,2,1,1,1,1,1
+notesApi,com.mediscreen.notes.config,SwaggerConfig,0,15,0,0,0,6,0,2,0,2
+notesApi,com.mediscreen.notes.model,NoteMapperImpl,4,72,2,6,2,20,2,6,0,4
+notesApi,com.mediscreen.notes.model,Note,9,3,0,0,4,1,1,1,1,1
+notesApi,com.mediscreen.notes.model,NoteMapper,0,5,0,0,0,1,0,1,0,1

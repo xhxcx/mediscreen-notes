@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoteMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">notesApi</a> &gt; <a href="index.source.html" class="el_package">com.mediscreen.notes.model</a> &gt; <span class="el_source">NoteMapperImpl.java</span></div><h1>NoteMapperImpl.java</h1><pre class="source lang-java linenums">package com.mediscreen.notes.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Generated;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2021-12-09T14:37:15+0100&quot;,
+    comments = &quot;version: 1.4.2.Final, compiler: javac, environment: Java 1.8.0_151 (Oracle Corporation)&quot;
+)
+<span class="fc" id="L12">public class NoteMapperImpl implements NoteMapper {</span>
+
+    @Override
+    public Note mapToEntity(NoteDto noteDto) {
+<span class="pc bpc" id="L16" title="1 of 2 branches missed.">        if ( noteDto == null ) {</span>
+<span class="nc" id="L17">            return null;</span>
+        }
+
+<span class="fc" id="L20">        Note note = new Note();</span>
+
+<span class="fc" id="L22">        note.setId( noteDto.getId() );</span>
+<span class="fc" id="L23">        note.setPatientId( noteDto.getPatientId() );</span>
+<span class="fc" id="L24">        note.setNote( noteDto.getNote() );</span>
+
+<span class="fc" id="L26">        return note;</span>
+    }
+
+    @Override
+    public NoteDto mapToDTO(Note note) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if ( note == null ) {</span>
+<span class="fc" id="L32">            return null;</span>
+        }
+
+<span class="fc" id="L35">        NoteDto noteDto = new NoteDto();</span>
+
+<span class="fc" id="L37">        noteDto.setId( note.getId() );</span>
+<span class="fc" id="L38">        noteDto.setPatientId( note.getPatientId() );</span>
+<span class="fc" id="L39">        noteDto.setNote( note.getNote() );</span>
+
+<span class="fc" id="L41">        return noteDto;</span>
+    }
+
+    @Override
+    public List&lt;NoteDto&gt; mapToDtoList(List&lt;Note&gt; noteList) {
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if ( noteList == null ) {</span>
+<span class="nc" id="L47">            return null;</span>
+        }
+
+<span class="fc" id="L50">        List&lt;NoteDto&gt; list = new ArrayList&lt;NoteDto&gt;( noteList.size() );</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        for ( Note note : noteList ) {</span>
+<span class="fc" id="L52">            list.add( mapToDTO( note ) );</span>
+<span class="fc" id="L53">        }</span>
+
+<span class="fc" id="L55">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
